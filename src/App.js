@@ -1,9 +1,10 @@
 import { useEffect, useState, useRef } from "react"
 import { findIndexInObj } from "./Common/Generic"
+import useLocalStorage from "./hooks/useLocalStorage"
 
 function App() {
   const [addFlag, setAddFlag] = useState(false)
-  const [foodBill, setFoodBill] = useState([])
+  const [friends, setFriends] = useState([])
   const [friendSel, setFriendSel] = useState(null)
 
   const nameref = useRef()
@@ -12,7 +13,7 @@ function App() {
   console.log("App Render")
 
   useEffect(() => {
-    setFoodBill((e) => [
+    setFriends((e) => [
       {
         id: crypto.randomUUID(),
         friendName: "Pawan",
@@ -54,21 +55,28 @@ function App() {
     setAddFlag((e) => (e = false))
   }, [friendSel])
 
-  const findIdInSplitBills = (id) => {
-    const findIndex = findIndexInObj(friendSplitBills, "personId", id)
+  const getfriendBillDetails = (id) => {
+    const data = localStorage.getItem("split-bills")
+    if (data) {
+      const findIndex = findIndexInObj(data, "personId", id)
+
+      if (findIndex > -1) {
+      }
+    }
   }
 
   const handleFormSubmit = (e) => {
     e.preventDefault()
     console.log(nameref.current?.value, imgref.current?.value)
-    setFoodBill((foodBills) => [
-      ...foodBills,
+    setFriends((oldFriends) => [
+      ...oldFriends,
       {
         id: crypto.randomUUID(),
         friendName: nameref.current?.value,
         imgUrl: imgref.current?.value,
       },
     ])
+
     setAddFlag((e) => (e = !e))
   }
 
@@ -81,7 +89,7 @@ function App() {
     <div className="app">
       <div>
         <ul className="sidebar">
-          {foodBill.map((f) => (
+          {friends.map((f) => (
             <FriendLi
               friend={f}
               key={f.id}
