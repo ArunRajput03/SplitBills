@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const useLocalStorage = (key, initalData) => {
+const useLocalStorage = (key, initalData) => {
   const [value, setValue] = useState(() => {
     const locData = localStorage.getItem(key)
     if (locData === null) {
@@ -10,7 +10,10 @@ export const useLocalStorage = (key, initalData) => {
     return JSON.parse(locData)
   })
 
+  console.log("LocalStorage Hook Render")
+
   useEffect(() => {
+    console.log("LocalStorage Hook UseEffect Render")
     if (value === undefined) {
       localStorage.removeItem(key)
     } else {
@@ -20,3 +23,4 @@ export const useLocalStorage = (key, initalData) => {
 
   return [value, setValue]
 }
+export default useLocalStorage

@@ -4,36 +4,13 @@ import useLocalStorage from "./hooks/useLocalStorage"
 
 function App() {
   const [addFlag, setAddFlag] = useState(false)
-  const [friends, setFriends] = useState([])
+  const [friends, setFriends] = useLocalStorage("MyFriends", []) //useState([])
   const [friendSel, setFriendSel] = useState(null)
 
   const nameref = useRef()
   const imgref = useRef()
 
   console.log("App Render")
-
-  useEffect(() => {
-    setFriends((e) => [
-      {
-        id: crypto.randomUUID(),
-        friendName: "Pawan",
-        imgUrl: "https://i.pravatar.cc/48?u=118836",
-        balance: 0,
-      },
-      {
-        id: crypto.randomUUID(),
-        friendName: "Abey Tu",
-        imgUrl: "https://i.pravatar.cc/48?u=933372",
-        balance: 0,
-      },
-      {
-        id: crypto.randomUUID(),
-        friendName: "Anthony",
-        imgUrl: "https://i.pravatar.cc/48?u=499476",
-        balance: 0,
-      },
-    ])
-  }, [])
 
   const friendSplitBills = [
     {
